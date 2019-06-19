@@ -1,48 +1,51 @@
 ﻿@model IEnumerable<CatalogCRUD.Models.Book>
 
-    @{
-ViewData["Title"] = "Books";
-    }
+@{
+    ViewData["Title"] = "Books";
+}
 
-    <h2>Books</h2>
-    <div class="row">
-        <div class="col-md-12">
-            @if (TempData["message"] != null)
-            {
+<h2>Books</h2>
+<div class="row">
+    <div class="col-md-12">
+        @if (TempData["message"] != null)
+        {
             <div class="alert alert-success alert-dismissible">
                 @TempData["message"]
             </div>
-            }
-            <p>
-                <a asp-action="Create" class="btn btn-primary">Create New</a>
-            </p>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            Name
-                        </th>
-                        <th>
-                            Author
-                        </th>
-                        <th>
-                            Description
-                        </th>
-                        <th>
-                            CreationDate
-                        </th>
-                        <th>
-                            Price
-                        </th>
-                        <th>
-                            PagesNumber
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-            {
+        }
+        <p>
+            <a asp-action="Create" class="btn btn-primary">Create New</a>
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Author
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        CreationDate
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        PagesNumber
+                    </th>
+                    <th>
+                        Category
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
                     <tr>
                         <td>
                             @item.Name
@@ -63,6 +66,9 @@ ViewData["Title"] = "Books";
                             @item.PagesNumber
                         </td>
                         <td>
+                            @item.CategoryName.Name
+                        </td>
+                        <td>
                             <a asp-action="Details" asp-route-id="@item.ID">
                                 <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                             </a>
@@ -78,8 +84,8 @@ ViewData["Title"] = "Books";
                             </a>
                         </td>
                     </tr>
-            }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     </div>
+</div>

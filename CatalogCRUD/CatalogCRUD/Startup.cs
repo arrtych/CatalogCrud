@@ -2,23 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CatalogCrud.Data;
+using CatalogCrud.Repository;
 using CatalogCRUD.Data;
+using CatalogCRUD.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CatalogCRUD
+namespace CatalogCrud
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private IConfigurationRoot _configurationRoot;
+
+        public Startup(IHostingEnvironment hostingEnvironment)
         {
-            Configuration = configuration;
+            _configurationRoot = new ConfigurationBuilder()
+               .SetBasePath(hostingEnvironment.ContentRootPath)
+               .AddJsonFile("appsettings.json")
+               .Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -33,9 +42,19 @@ namespace CatalogCRUD
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //server config
             services.AddDbContext<CrudContext>(options => options.UseSqlServer
-            (Configuration.GetConnectionString("DefaultConnection")));
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+          (_configurationRoot.GetConnectionString("DefaultConnection")));
+
+            //Authentication, Identity config
+            //services.AddIdentity<IdentityUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<CrudContext>();
+
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddMvc();
+
+           // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +80,10 @@ namespace CatalogCRUD
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+
+            DbInitializer.Initialize(app);
+
         }
     }
 }

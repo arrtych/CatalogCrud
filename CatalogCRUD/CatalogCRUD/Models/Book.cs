@@ -13,9 +13,10 @@ namespace CatalogCRUD.Models
         public String Description { get; set; }
         public DateTime CreationDate { get; set; }
         public double Price { get; set; }
-        public Category CategoryName { get; set; }
         public int PagesNumber { get; set; }
 
-        
+        public int CategoryId { get; set; }
+        public virtual Category CategoryName { get; set; }
+
     }
 }

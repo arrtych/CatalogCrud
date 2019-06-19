@@ -1,25 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using CatalogCRUD.Models;
+using CatalogCrud.Repository;
 using CatalogCRUD.Data;
+using CatalogCRUD.Models;
+using CatalogCRUD.Repository;
+using Microsoft.AspNetCore.Mvc;
 
-namespace CatalogCRUD.Controllers
+namespace CatalogCrud.Controllers
 {
     public class BookController : Controller
     {
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IBookRepository _bookRepository;
         private readonly CrudContext _context;
-        public BookController(CrudContext context)
+        public BookController(IBookRepository bookrepository, ICategoryRepository categoryrepository, CrudContext context)
         {
+            _bookRepository = bookrepository;
+            _categoryRepository = categoryrepository;
             _context = context;
-        }
 
+        }
         public IActionResult Index()
         {
-            return View(_context.Books.ToList());
+            var books = _bookRepository.Books;
+            return View(books);
+        }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Book book = _bookRepository.Books.SingleOrDefault(x => x.ID == id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            return View(book);
         }
 
         public IActionResult Edit(int? id)
@@ -29,7 +52,7 @@ namespace CatalogCRUD.Controllers
                 return NotFound();
             }
 
-            Book book = _context.Books.SingleOrDefault(x => x.ID == id);
+            Book book = _bookRepository.Books.SingleOrDefault(x => x.ID == id);
 
             if (book == null)
             {
@@ -39,10 +62,9 @@ namespace CatalogCRUD.Controllers
             return View(book);
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int? id, Book book)
+        public IActionResult Edit(int? id, Book person)
         {
             if (id == null)
             {
@@ -51,7 +73,7 @@ namespace CatalogCRUD.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Update(book);
+                _context.Update(person);
                 _context.SaveChanges();
 
                 TempData["message"] = "Book edited!";
@@ -60,26 +82,8 @@ namespace CatalogCRUD.Controllers
             }
 
             ModelState.AddModelError("", "There have been errors.");
-            return View(book);
+            return View(person);
 
-        }
-
-
-        public IActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Book book = _context.Books.SingleOrDefault(x => x.ID == id);
-
-            if (book == null)
-            {
-                return NotFound();
-            }
-
-            return View(book);
         }
 
         public IActionResult Create()
@@ -93,6 +97,7 @@ namespace CatalogCRUD.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Add(book);
                 _context.SaveChanges();
 
@@ -104,28 +109,6 @@ namespace CatalogCRUD.Controllers
             ModelState.AddModelError("", "There have been errors.");
             return View(book);
 
-        }
-
-        public IActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            Book book = _context.Books.SingleOrDefault(x => x.ID == id);
-
-            if (book == null)
-            {
-                return NotFound();
-            }
-
-            _context.Remove(book);
-            _context.SaveChanges();
-
-            TempData["message"] = "Book deleted!";
-
-            return RedirectToAction("Index");
         }
     }
 }

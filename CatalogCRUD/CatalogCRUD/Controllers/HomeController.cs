@@ -4,22 +4,15 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using CatalogCRUD.Models;
-using CatalogCRUD.Data;
+using CatalogCrud.Models;
 
-namespace CatalogCRUD.Controllers
+namespace CatalogCrud.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly CrudContext _context;
-        public HomeController(CrudContext context)
-        {
-            _context = context;
-        }
-
         public IActionResult Index()
         {
-            return View(_context.Books.ToList());
+            return View();
         }
 
         public IActionResult About()
