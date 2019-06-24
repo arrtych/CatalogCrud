@@ -60,6 +60,16 @@ namespace CatalogCrud.Data
                         Price = 5.0,
                         CategoryName = Categories["Computers & Technology"],
                         PagesNumber = 150
+                    },
+                    new Book
+                    {
+                        Name = "Some name3",
+                        Author = "Jordj Martin",
+                        Description = "lorem impsum ......",
+                        CreationDate = DateTime.Now,
+                        Price = 5.0,
+                        CategoryName = Categories["History"],
+                        PagesNumber = 150
                     }
                 };
 

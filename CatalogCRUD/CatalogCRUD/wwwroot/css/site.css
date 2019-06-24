@@ -35,3 +35,9 @@ body {
         display: none;
     }
 }
+
+.table-st {
+    border: 2px solid #dcd9d9;
+    border-radius: 5px;
+    padding: 0.5px;
+}

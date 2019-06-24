@@ -7,6 +7,7 @@ using CatalogCRUD.Data;
 using CatalogCRUD.Models;
 using CatalogCRUD.Repository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CatalogCrud.Controllers
 {
@@ -64,7 +65,7 @@ namespace CatalogCrud.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int? id, Book person)
+        public IActionResult Edit(int? id, Book book)
         {
             if (id == null)
             {
@@ -73,7 +74,7 @@ namespace CatalogCrud.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Update(person);
+                _context.Update(book);
                 _context.SaveChanges();
 
                 TempData["message"] = "Book edited!";
@@ -82,7 +83,7 @@ namespace CatalogCrud.Controllers
             }
 
             ModelState.AddModelError("", "There have been errors.");
-            return View(person);
+            return View(book);
 
         }
 
@@ -96,19 +97,93 @@ namespace CatalogCrud.Controllers
         public IActionResult Create(Book book)
         {
             if (ModelState.IsValid)
-            {
-                
+            {                
                 _context.Add(book);
                 _context.SaveChanges();
 
                 TempData["message"] = "Book created!";
-
+                //ViewBag.CategoryId = new SelectList(_context.Categories, "ID", "Name");
                 return RedirectToAction("Index");
             }
 
             ModelState.AddModelError("", "There have been errors.");
             return View(book);
 
+        }
+
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Book book = _bookRepository.Books.SingleOrDefault(x => x.ID == id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            _context.Remove(book);
+            _context.SaveChanges();
+
+            TempData["message"] = "Book deleted!";
+
+            return RedirectToAction("Index");
+        }
+
+        
+        public JsonResult GetCategories()
+        {
+            using  (_context)
+            {
+                var res = _context.Categories.OrderBy(x => x.Name).ToList();                
+                return Json(res);
+            }          
+            
+        }
+
+        [Produces("application/json")]
+        [HttpGet("categories")]
+        public JsonResult SearchCategories()
+        {
+            string term = HttpContext.Request.Query["term"].ToString();
+            var names = _context.Categories.Where(x => x.Name.Contains(term)).Select(x => x.Name).ToList();
+            return Json(names);
+        }
+
+        public JsonResult GetCurrentCategory(int categoryId)
+        {
+            using (_context)
+            {
+                var category = _context.Categories.Where(x => x.ID == categoryId).Select(x => new
+                {
+                    x.ID, x.Name
+                }).ToList();
+                return Json(category);
+            }
+        }
+
+        public JsonResult GetBooks()
+        {
+            using (_context)
+            {
+                var books = _context.Books.Select(x => new
+                {
+                    x.ID,
+                    x.Name,
+                    x.Author,
+                    x.CategoryName,
+                    x.Description,
+                    x.CreationDate,
+                    x.Price,
+                    x.PagesNumber
+
+                }).ToList().OrderByDescending(x=> x.CreationDate);
+                return Json(books);
+            }
         }
     }
 }

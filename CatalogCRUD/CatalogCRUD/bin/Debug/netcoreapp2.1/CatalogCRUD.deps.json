@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "3d650778e3500094e38cb51398f5ded5c197beae"
+    "signature": "ba41cae27a9c942fe9d889cf21692d46d3a02d2d"
   },
   "compilationOptions": {
     "defines": [
@@ -24,10 +24,12 @@
     ".NETCoreApp,Version=v2.1": {
       "CatalogCrud/1.0.0": {
         "dependencies": {
+          "AngularJS.Core": "1.6.0",
           "Microsoft.AspNetCore.App": "2.1.1",
           "Microsoft.AspNetCore.Razor.Design": "2.1.2",
           "Microsoft.NETCore.App": "2.1.0",
-          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.9"
+          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.9",
+          "bootstrap": "3.4.1"
         },
         "runtime": {
           "CatalogCrud.dll": {}
@@ -36,6 +38,13 @@
           "CatalogCrud.dll": {}
         }
       },
+      "AngularJS.Core/1.6.0": {},
+      "bootstrap/3.4.1": {
+        "dependencies": {
+          "jQuery": "1.9.1"
+        }
+      },
+      "jQuery/1.9.1": {},
       "Microsoft.AspNetCore.Razor.Design/2.1.2": {},
       "Microsoft.CodeAnalysis.CSharp.Workspaces/2.8.0": {
         "dependencies": {
@@ -3461,6 +3470,27 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AngularJS.Core/1.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-tmzH9dpi8O3cCj85QK+mD9qW4VGYY2ZJ6eu96PgxgkxmFLiKKwDcUCvPoOh5A3RN7YRJrNISsIv6nJ+DrQUmtQ==",
+      "path": "angularjs.core/1.6.0",
+      "hashPath": "angularjs.core.1.6.0.nupkg.sha512"
+    },
+    "bootstrap/3.4.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-rnqnZV4sFAgB240hnLRwqoUaV2DfzrYsc6PbsYzRTObrrucLZyvb+8F1yTVT1sDbXMi/NXlyRmiL6wF+d4ZJMA==",
+      "path": "bootstrap/3.4.1",
+      "hashPath": "bootstrap.3.4.1.nupkg.sha512"
+    },
+    "jQuery/1.9.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HiX9icLyiJGgiL5EOIn0d1MBPHVV2M9mzWT4mANdniDNR51RvAFTyKEXEd2+5yQJ4PJ5xePOR61Vjj/omQzYcw==",
+      "path": "jquery/1.9.1",
+      "hashPath": "jquery.1.9.1.nupkg.sha512"
     },
     "Microsoft.AspNetCore.Razor.Design/2.1.2": {
       "type": "package",
