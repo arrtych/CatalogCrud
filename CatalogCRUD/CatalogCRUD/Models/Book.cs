@@ -12,11 +12,11 @@ namespace CatalogCRUD.Models
     {
         public int ID { get; set; }
 
-        [StringLength(60, MinimumLength = 3)]
+        [StringLength(200, MinimumLength = 3)]
         [Required]
         public String Name { get; set; }
 
-        [StringLength(60, MinimumLength = 3)]
+        [StringLength(200, MinimumLength = 3)]
         [Required]
         public String Author { get; set; }
 

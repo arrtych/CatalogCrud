@@ -102,7 +102,6 @@ namespace CatalogCrud.Controllers
                 _context.SaveChanges();
 
                 TempData["message"] = "Book created!";
-                //ViewBag.CategoryId = new SelectList(_context.Categories, "ID", "Name");
                 return RedirectToAction("Index");
             }
 
@@ -166,6 +165,8 @@ namespace CatalogCrud.Controllers
             }
         }
 
+
+        /*Get list of all books. Ordered by creation date*/
         public JsonResult GetBooks()
         {
             using (_context)
@@ -184,6 +185,28 @@ namespace CatalogCrud.Controllers
                 }).ToList().OrderByDescending(x=> x.CreationDate);
                 return Json(books);
             }
+        }
+
+        /*Get books ordered by Name*/
+        public JsonResult GetAllBooks()
+        {
+            using (_context)
+            {
+                var books = _context.Books.Select(x => new
+                {
+                    x.ID,
+                    x.Name,
+                    x.Author,
+                    x.CategoryName,
+                    x.Description,
+                    x.CreationDate,
+                    x.Price,
+                    x.PagesNumber
+
+                }).OrderBy(x => x.Name).ToList();
+                return Json(books);
+            }
+
         }
     }
 }

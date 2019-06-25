@@ -4,68 +4,77 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
-<h4>Book</h4>
+
+
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <h2>Add new book</h2>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
-                <input asp-for="Author" class="form-control" />
-                <span asp-validation-for="Author" class="text-danger"></span>
-            </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="panel panel-default">
+            <div class="panel-heading"><h3>Create new Book</h3></div>
+            <div class="panel-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Author" class="control-label"></label>
+                        <input asp-for="Author" class="form-control" />
+                        <span asp-validation-for="Author" class="text-danger"></span>
+                    </div>
 
-            <div class="form-group">
-                <label asp-for="CategoryName" class="control-label"></label>
-                <!-- <input asp-for="CategoryName.Name" class="form-control" />-->
-                <!-- <input type="text" id="categoryName" placeholder="Input category name" /> -->
-                <input type="text" asp-for="CategoryName.Name" id="category" ng-model="category" ng-keyup="complete(category)" class="form-control" />
-                <ul class="list-group" ng-model="hidethis" ng-hide="hidethis">
-                    <li class="list-group-item" ng-repeat="categorydata in filterCategory track by $index" ng-click="fillTextbox(categorydata)">{{categorydata}}</li>
-                </ul>
+                    <div class="form-group">
+                        <label asp-for="CategoryName" class="control-label"></label>
+                        <input type="text" asp-for="CategoryName.Name" id="category" class="form-control" />
+                        <span asp-validation-for="CategoryName" class="text-danger"></span>
 
-                @*<select class="form-control" asp-for="CategoryName.Name">
-                    <option ng-repeat="c in Categories" value={{c.name}}>{{c.name}}</option>
-                </select>*@
-                <span asp-validation-for="CategoryName" class="text-danger"></span>
+
+<!-- <input asp-for="CategoryName.Name" class="form-control" />-->
+@*<input type="text" asp-for="CategoryName.Name" id="category" ng-model="category" ng-keyup="complete(category)" class="form-control" />
+<ul class="list-group" ng-model="hidethis" ng-hide="hidethis">
+<li class="list-group-item" ng-repeat="categorydata in filterCategory track by $index" ng-click="fillTextbox(categorydata)">{{categorydata}}</li>
+</ul>*@
+<!-- <input asp-for="CategoryName.Name" class="form-control" />-->
+@*<select class="form-control" asp-for="CategoryName.Name">
+<option ng-repeat="c in Categories" value={{c.name}}>{{c.name}}</option>
+</select>*@
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CreationDate" class="control-label"></label>
+                        <input asp-for="CreationDate" class="form-control" value="@DateTime.Now.ToString("s")" />
+                        <span asp-validation-for="CreationDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PagesNumber" class="control-label"></label>
+                        <input asp-for="PagesNumber" class="form-control" />
+                        <span asp-validation-for="PagesNumber" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <a class="btn btn-primary" asp-action="Index">Back to List</a>
+                        <input type="submit" value="Create" class="btn btn-success" />
+
+                    </div>
+                </form>
             </div>
-                <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CreationDate" class="control-label"></label>
-                    <input asp-for="CreationDate" class="form-control" value="@DateTime.Now.ToString("s")" />
-                    <span asp-validation-for="CreationDate" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Price" class="control-label"></label>
-                    <input type="number" asp-for="Price" class="form-control" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PagesNumber" class="control-label"></label>
-                    <input asp-for="PagesNumber" class="form-control" />
-                    <span asp-validation-for="PagesNumber" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </form>
         </div>
-    </div>
 
-    <div>
-        <a asp-action="Index">Back to List</a>
     </div>
+    <div class="col-md-2"></div>
+</div>
+
 

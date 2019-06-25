@@ -41,3 +41,26 @@ body {
     border-radius: 5px;
     padding: 0.5px;
 }
+
+.search-input{
+    height: 52px;
+}
+
+/*index icons*/
+
+.icon-delete {
+    color: red;
+}
+.icon-edit {
+    color: #274371;
+}
+.icon-view {
+    color: #45a745;
+}
+.header-st {
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+.add-btn {
+    padding-bottom: 0px !important;
+}
